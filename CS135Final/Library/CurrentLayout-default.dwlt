@@ -21,7 +21,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 6}
-  m_MinSize: {x: 875, y: 542}
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
@@ -45,10 +45,10 @@ MonoBehaviour:
     y: 30
     width: 2560
     height: 1307
-  m_MinSize: {x: 677, y: 492}
-  m_MaxSize: {x: 14001, y: 14042}
+  m_MinSize: {x: 678, y: 492}
+  m_MaxSize: {x: 14002, y: 14042}
   vertical: 0
-  controlID: 21451
+  controlID: 16
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -68,8 +68,8 @@ MonoBehaviour:
     y: 0
     width: 606
     height: 1307
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -173,7 +173,7 @@ MonoBehaviour:
     height: 30
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
-  m_LastLoadedLayoutName: Default
+  m_LastLoadedLayoutName: 
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -219,7 +219,7 @@ MonoBehaviour:
   m_MinSize: {x: 402, y: 492}
   m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 21425
+  controlID: 69
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -244,7 +244,7 @@ MonoBehaviour:
   m_MinSize: {x: 402, y: 221}
   m_MaxSize: {x: 8002, y: 4021}
   vertical: 0
-  controlID: 21426
+  controlID: 70
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -311,20 +311,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/Scripts
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets
+  - Assets/Scripts
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\cs135\final project\cs135Final\CS135Final
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: b4430000
-    m_LastClickedID: 17332
-    m_ExpandedIDs: ffffffff00000000b4430000b643000000ca9a3b
+    m_SelectedIDs: c4430000
+    m_LastClickedID: 17348
+    m_ExpandedIDs: 00000000a8430000aa430000ca43000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -352,7 +352,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff00000000b4430000b643000000ca9a3b
+    m_ExpandedIDs: 00000000a8430000aa430000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -379,7 +379,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -396,7 +396,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 0}
+      m_ClientGUIView: {fileID: 5}
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
       m_InstanceID: 0
@@ -477,18 +477,18 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: ba400000
       m_LastClickedID: 16570
-      m_ExpandedIDs: 42fbffff60fbffffba400000d4400000
+      m_ExpandedIDs: 60fbffff5e40000066400000ba400000ce400000da400000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: Right Hand Presence
-        m_OriginalName: Right Hand Presence
+        m_Name: M1911 Handgun_Model
+        m_OriginalName: M1911 Handgun_Model
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: -1306
+        m_UserData: 16570
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
         m_OriginalEventType: 0
@@ -537,9 +537,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 13.179326, y: 0.48512793, z: -8.613276}
+    m_Target: {x: -0.48894852, y: 0.73496354, z: -9.048151}
     speed: 2
-    m_Value: {x: 13.179326, y: 0.48512793, z: -8.613276}
+    m_Value: {x: -0.48894852, y: 0.73496354, z: -9.048151}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -585,20 +585,20 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.01675995, y: 0.7240717, z: -0.017605243, w: 0.68930024}
+    m_Target: {x: 0.042978927, y: -0.9521294, z: 0.15884784, w: 0.25766715}
     speed: 2
-    m_Value: {x: 0.016759904, y: 0.7240697, z: -0.017605195, w: 0.68929833}
+    m_Value: {x: 0.04297844, y: -0.95211864, z: 0.15884604, w: 0.25766423}
   m_Size:
-    m_Target: 6.607396
+    m_Target: 1.3053148
     speed: 2
-    m_Value: 6.607396
+    m_Value: 1.6053147
   m_Ortho:
     m_Target: 0
     speed: 2
     m_Value: 0
   m_CameraSettings:
-    m_Speed: 1
-    m_SpeedNormalized: 0.5
+    m_Speed: 0.5
+    m_SpeedNormalized: 0.26
     m_SpeedMin: 0.001
     m_SpeedMax: 2
     m_EasingEnabled: 1
@@ -729,8 +729,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 2249
-    y: 726.5
-    width: 920
-    height: 250
+    x: 0
+    y: 939
+    width: 1953
+    height: 420
   m_ViewDataDictionary: {fileID: 0}

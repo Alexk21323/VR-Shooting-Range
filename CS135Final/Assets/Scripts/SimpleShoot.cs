@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 [AddComponentMenu("Nokobot/Modern Guns/Simple Shoot")]
 public class SimpleShoot : MonoBehaviour
@@ -9,9 +10,6 @@ public class SimpleShoot : MonoBehaviour
     public GameObject bulletPrefab;
     public GameObject casingPrefab;
     public GameObject muzzleFlashPrefab;
-    public AudioSource source;
-    public AudioClip gunshotSound;
-    public AudioClip holdSound;
 
     [Header("Location Refrences")]
     [SerializeField] private Animator gunAnimator;
@@ -23,6 +21,17 @@ public class SimpleShoot : MonoBehaviour
     [Tooltip("Bullet Speed")] [SerializeField] private float shotPower = 500f;
     [Tooltip("Casing Ejection Speed")] [SerializeField] private float ejectPower = 150f;
 
+    public AudioSource source;
+    public AudioClip gunshotSound;
+    public AudioClip holdSound;
+    public AudioClip reloadSound;
+    public AudioClip noAmmo;
+    public AudioClip slideSound;
+
+    public Magazine magazine;
+    private bool slided = false;
+    public XRBaseInteractor socketInteractor;
+    
 
     void Start()
     {
@@ -31,6 +40,9 @@ public class SimpleShoot : MonoBehaviour
 
         if (gunAnimator == null)
             gunAnimator = GetComponentInChildren<Animator>();
+
+        socketInteractor.onSelectEntered.AddListener(AddMagazine);
+        socketInteractor.onSelectExited.AddListener(AddMagazine);
     }
 
     void Update()
@@ -43,10 +55,31 @@ public class SimpleShoot : MonoBehaviour
         }
     }
 
+    public void AddMagazine(XRBaseInteractable interactable)
+    {
+        source.PlayOneShot(reloadSound);
+        magazine = interactable.GetComponent<Magazine>();
+        slided = false;
+    }
+
+    public void RemoveMagazine(XRBaseInteractable interactable)
+    {
+        magazine = null;
+    }
+
+    public void slide()
+    {
+        source.PlayOneShot(slideSound);
+        slided = true;
+    }
 
     //This function creates the bullet behavior
     void Shoot()
     {
+        if (magazine)
+        {
+            magazine.numberOfBullet--;
+        }
         source.PlayOneShot(gunshotSound);
         if (muzzleFlashPrefab)
         {
@@ -74,7 +107,14 @@ public class SimpleShoot : MonoBehaviour
 
     public void OnTrigger()
     {
-        gunAnimator.SetTrigger("Fire");
+        if (magazine && magazine.numberOfBullet > 0 && slided)
+        {
+            gunAnimator.SetTrigger("Fire");
+        }
+        else
+        {
+            source.PlayOneShot(noAmmo);
+        }
     }
 
     //This function creates a casing at the ejection slot
