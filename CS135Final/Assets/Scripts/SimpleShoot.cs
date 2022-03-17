@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR;
+using UnityEngine.SceneManagement;
+
 
 [AddComponentMenu("Nokobot/Modern Guns/Simple Shoot")]
+
 public class SimpleShoot : MonoBehaviour
 {
     [Header("Prefab Refrences")]
@@ -21,6 +25,7 @@ public class SimpleShoot : MonoBehaviour
     [Tooltip("Bullet Speed")] [SerializeField] private float shotPower = 500f;
     [Tooltip("Casing Ejection Speed")] [SerializeField] private float ejectPower = 150f;
 
+
     public AudioSource source;
     public AudioClip gunshotSound;
     public AudioClip holdSound;
@@ -30,6 +35,7 @@ public class SimpleShoot : MonoBehaviour
 
     public Magazine magazine;
     private bool slided = false;
+    private int shotCount;
     public XRBaseInteractor socketInteractor;
     
 
@@ -43,6 +49,7 @@ public class SimpleShoot : MonoBehaviour
 
         socketInteractor.onSelectEntered.AddListener(AddMagazine);
         socketInteractor.onSelectExited.AddListener(AddMagazine);
+        shotCount = 0;
     }
 
     void Update()
@@ -50,8 +57,7 @@ public class SimpleShoot : MonoBehaviour
         //If you want a different input, change it here
         if (Input.GetButtonDown("Fire1"))
         {
-            //Calls animation on the gun that has the relevant animation events that will fire
-            gunAnimator.SetTrigger("Fire");
+            SceneManager.LoadScene("SampleScene");
         }
     }
 
@@ -72,6 +78,11 @@ public class SimpleShoot : MonoBehaviour
         source.PlayOneShot(slideSound);
         slided = true;
     }
+    
+    public int getShotCount()
+    {
+        return shotCount;
+    }
 
     //This function creates the bullet behavior
     void Shoot()
@@ -79,6 +90,7 @@ public class SimpleShoot : MonoBehaviour
         if (magazine)
         {
             magazine.numberOfBullet--;
+            shotCount += 1;
         }
         source.PlayOneShot(gunshotSound);
         if (muzzleFlashPrefab)
@@ -97,7 +109,6 @@ public class SimpleShoot : MonoBehaviour
 
         // Create a bullet and add force on it in direction of the barrel
         Instantiate(bulletPrefab, barrelLocation.position, barrelLocation.rotation).GetComponent<Rigidbody>().AddForce(barrelLocation.forward * shotPower);
-
     }
 
     public void HoldSound()

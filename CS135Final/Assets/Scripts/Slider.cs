@@ -11,6 +11,7 @@ public class Slider : MonoBehaviour
     public UnityEvent activateWave;
     public TargetManager targetManager;
     public ScoreKeeper score;
+    public SimpleShoot simpleshoot;
     public bool waveActive;
 
     private bool wasReached = false;
@@ -32,8 +33,7 @@ public class Slider : MonoBehaviour
             OnReached.Invoke();
             wasReached = true;
             waveActive = targetManager.isWave();
-            Debug.Log(waveActive);
-            if (!waveActive)
+            if (!waveActive && simpleshoot.magazine)
             {
                 ScoreKeeper.current.ResetScore();
                 activateWave.Invoke();

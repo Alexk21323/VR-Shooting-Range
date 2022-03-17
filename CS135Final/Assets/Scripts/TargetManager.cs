@@ -10,7 +10,7 @@ public class TargetManager : MonoBehaviour
     public Transform[] SpawnPoints;
     public float WaveTime;
     public TextMeshProUGUI timeText;
-    public ScoreKeeper scoreKeeper;
+    public SimpleShoot simpleShoot;
 
     //time shit
     private float timeSinceLastSpawn;
@@ -32,7 +32,7 @@ public class TargetManager : MonoBehaviour
         return waveActive;
     }
 
-    private void Update()
+    public void Update()
     {
         if (waveActive)
         {
@@ -40,55 +40,36 @@ public class TargetManager : MonoBehaviour
             
             if(timeSinceLastSpawn > spawnTime)
             {
-                //SpawnWave();
-                int spawnIndex = Random.Range(0, (int)SpawnPoints.Length / 2) * 2; //only use even indicies
+                int spawnIndex = Random.Range(0, SpawnPoints.Length); 
                 float pathTime = Random.Range(2f, 4f);
                 Target tar = Instantiate(TargetsPrefabs[0], SpawnPoints[spawnIndex].position, SpawnPoints[spawnIndex].rotation).GetComponent<Target>();
-                tar.SetPath(SpawnPoints[spawnIndex], SpawnPoints[spawnIndex+1]);
-                tar.SetPathTime(pathTime);
                 timeSinceLastSpawn = 0;
                 spawnTime = 2f;
                 waveCount += 1;
-                if (waveCount % 8 == 0)
+                if (simpleShoot.getShotCount() % 8 == 0)
                 {
-                    spawnTime = 3;
+                    spawnTime = 4;
                 }
             }
 
             timeText.text = "Begin";
-            int time = (int) Mathf.Floor(WaveTime - (Time.time - waveStartTime));
-            if (waveCount == 16)
+            if (waveCount >= 2)
+            {
+                timeText.text = "";
+            }
+                        
+            if (waveCount == 32 || simpleShoot.getShotCount() >= 32)
             {
                 StartCoroutine(EndWave());
                 StartCoroutine(ScoreReset());
                 waveCount = 0;
             }
         }
-    }
-    private void SpawnWave()
-    {    
-        int[] tarList = { 0, 0, 0, 0, 0, 0, 0, 0, };
-        for (int i = 0; i < tarList.Length; i++)
-        {
-            int spawnIndex = Random.Range(0, (int)SpawnPoints.Length / 2) * 2; //only use even indicies
-            float spawnTime = Random.Range(0.75f, 1.5f);//declare random interval that the targets spawn apart from each other
-            float pathTime = Random.Range(2f, 4f);
-            IEnumerator spawn = SpawnTarget(tarList[i], SpawnPoints[spawnIndex], SpawnPoints[spawnIndex+1],pathTime, i); //spawn target a fixed amount of time from now
-            StartCoroutine(spawn);
-        }
-        waveCount += 1;
+        Debug.Log(simpleShoot.getShotCount());
     }
 
-    private IEnumerator SpawnTarget(int targetIndex, Transform startPos, Transform endpos, float pathTime, int i)
+    public void StartWave()
     {
-        yield return new WaitForSeconds(2 * i);
-        Target tar = Instantiate(TargetsPrefabs[targetIndex], startPos.position, startPos.rotation).GetComponent<Target>();
-        tar.SetPath(startPos, endpos);
-        tar.SetPathTime(pathTime);
-    }
-
-
-    public void StartWave() {//wraper so it can be called with button press
         StartCoroutine("ActualStartWave");
     }
 
@@ -116,7 +97,6 @@ public class TargetManager : MonoBehaviour
     }
     private IEnumerator ScoreReset()
     {
-        
         yield return new WaitForSeconds(3f);
     }
 }

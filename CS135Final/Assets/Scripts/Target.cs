@@ -15,22 +15,12 @@ public class Target : MonoBehaviour
     private bool moving;
     private void Start()
     {
-        moving = true;
-        Destroy(gameObject, Random.Range(5f, 8f));
-        currentPathTime = 0;
+        
     }
 
     private void Update()
     {
-        if (moving)
-        {
-            currentPathTime += Time.deltaTime;
-            //transform.position = Vector3.Lerp(point1.position, point2.position, currentPathTime / pathTime);
-            if (currentPathTime / pathTime >= 1)
-            {
-                Destroy(gameObject, 1f);
-            }
-        }
+        Destroy(gameObject, 2f);
     }
 
     private void OnTriggerStay(Collider other)
@@ -50,7 +40,6 @@ public class Target : MonoBehaviour
         {
             ScoreKeeper.current.ChangeScore(1);
         }
-        moving = false;
     }
 
     internal void SetPath(Transform startPos, Transform endpos)
