@@ -128,6 +128,15 @@ public class SimpleShoot : MonoBehaviour
         }
     }
 
+    public int getbulletCount()
+    {
+        if (magazine)
+        {
+            return magazine.numberOfBullet;
+        }
+        else
+            return 0;
+    }
     //This function creates a casing at the ejection slot
     void CasingRelease()
     {

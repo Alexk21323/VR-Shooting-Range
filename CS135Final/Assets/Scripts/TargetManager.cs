@@ -22,7 +22,6 @@ public class TargetManager : MonoBehaviour
     {
         timeSinceLastSpawn = 0;
         spawnTime = 0;
-        waveStartTime = 0;
         waveActive = false;
         waveCount = 0;
     }
@@ -36,36 +35,50 @@ public class TargetManager : MonoBehaviour
     {
         if (waveActive)
         {
-            timeSinceLastSpawn += Time.deltaTime;
-            
-            if(timeSinceLastSpawn > spawnTime)
-            {
-                int spawnIndex = Random.Range(0, SpawnPoints.Length); 
-                float pathTime = Random.Range(2f, 4f);
-                Target tar = Instantiate(TargetsPrefabs[0], SpawnPoints[spawnIndex].position, SpawnPoints[spawnIndex].rotation).GetComponent<Target>();
-                timeSinceLastSpawn = 0;
-                spawnTime = 2f;
-                waveCount += 1;
-                if (simpleShoot.getShotCount() % 8 == 0)
-                {
-                    spawnTime = 4;
-                }
-            }
+            spawnTime = 2f;
+            if(simpleShoot.getbulletCount() != 0)
+                timeSinceLastSpawn += Time.deltaTime;
 
             timeText.text = "Begin";
             if (waveCount >= 2)
             {
                 timeText.text = "";
             }
-                        
-            if (waveCount == 32 || simpleShoot.getShotCount() >= 32)
+
+            if (timeSinceLastSpawn > spawnTime)
+            {
+                int spawnIndex = Random.Range(0, SpawnPoints.Length);
+                Target tar = Instantiate(TargetsPrefabs[0], SpawnPoints[spawnIndex].position, SpawnPoints[spawnIndex].rotation).GetComponent<Target>();
+                timeSinceLastSpawn = 0;
+                waveCount += 1;
+            }
+
+            //check for empty mag 
+            if (simpleShoot.getbulletCount() == 0)
+            {
+                timeText.text = "Reload";
+            }
+            else
+            {
+                timeText.text = "";
+            }
+
+            if (waveCount >= 32 || simpleShoot.getShotCount() >= 32)
             {
                 StartCoroutine(EndWave());
                 StartCoroutine(ScoreReset());
                 waveCount = 0;
             }
         }
-        Debug.Log(simpleShoot.getShotCount());
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+            #else
+			    Application.Quit();
+            #endif
+        }
     }
 
     public void StartWave()
@@ -84,7 +97,6 @@ public class TargetManager : MonoBehaviour
         timeText.text = "1";
         yield return new WaitForSeconds(1);
 
-        waveStartTime = Time.time;
         waveActive = true;
 
     }
@@ -94,6 +106,7 @@ public class TargetManager : MonoBehaviour
         waveActive = false;
         timeText.text = "STOP";
         yield return new WaitForSeconds(3f);
+        timeText.text = "Press A to Restart";
     }
     private IEnumerator ScoreReset()
     {

@@ -20,7 +20,7 @@ public class Target : MonoBehaviour
 
     private void Update()
     {
-        Destroy(gameObject, 2f);
+        Destroy(gameObject, 3f);
     }
 
     private void OnTriggerStay(Collider other)
@@ -35,7 +35,7 @@ public class Target : MonoBehaviour
         {
             rb.AddForce(new Vector3(Random.Range(-force, force), Random.Range(-force, force), Random.Range(-force, force)));
         }
-        Destroy(gameObject, 3f);
+        Destroy(gameObject, 3.5f);
         if (FindObjectOfType<TargetManager>().isWave())
         {
             ScoreKeeper.current.ChangeScore(1);
