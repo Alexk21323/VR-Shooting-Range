@@ -55,6 +55,21 @@ public class ScoreKeeper : MonoBehaviour
         scoreText.text = "Score : " + score;
     }
 
+    public void ResetScore()
+    {
+        current.score = 0;
+        current.scoreText.text = "Score : " + score;
+        Debug.Log(current.score);
+        Debug.Log("Reset Score");
+    }
+
+    public int printScore()
+    {
+        return score;
+    }
+
+
+    //no point in this for us
     public void SaveScores()
     {
         string[] nam = GetNames();//just to be sure its loaded and shit
@@ -71,6 +86,8 @@ public class ScoreKeeper : MonoBehaviour
         PlayerPrefs.SetString("B5", nam[4]);
     }
 
+
+    //needs to be removed
     public int[] GetScores()
     {
         if (scores == null)
@@ -78,6 +95,7 @@ public class ScoreKeeper : MonoBehaviour
         return scores;
     }
 
+    //this needs to be removed
     public string[] GetNames()
     {
         if (names == null)
@@ -85,6 +103,8 @@ public class ScoreKeeper : MonoBehaviour
         return names;
     }
 
+
+    //don't need this either
     public void ResetData()
     {
         names = new string[] { "###", "###", "###", "###", "###" };
@@ -92,6 +112,9 @@ public class ScoreKeeper : MonoBehaviour
         print("RESETING DATA");
         SaveScores();
     }
+
+
+    //remove load data
     private void LoadData()
     {
         if (PlayerPrefs.HasKey("S1"))//if we set one we set them all
@@ -117,6 +140,8 @@ public class ScoreKeeper : MonoBehaviour
         }
     }
 
+
+    //need to remove setname useless for us
     public void SetName(string nam)
     {
         for(int i = 0; i < 5; i++)

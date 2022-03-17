@@ -10,7 +10,9 @@ public class Slider : MonoBehaviour
     public UnityEvent OnReached;
     public UnityEvent activateWave;
     public TargetManager targetManager;
+    public ScoreKeeper score;
     public bool waveActive;
+
     private bool wasReached = false;
 
     // Start is called before the first frame update
@@ -33,6 +35,7 @@ public class Slider : MonoBehaviour
             Debug.Log(waveActive);
             if (!waveActive)
             {
+                ScoreKeeper.current.ResetScore();
                 activateWave.Invoke();
             }
         }

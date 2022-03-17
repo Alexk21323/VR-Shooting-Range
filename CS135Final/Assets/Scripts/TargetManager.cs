@@ -10,7 +10,8 @@ public class TargetManager : MonoBehaviour
     public Transform[] SpawnPoints;
     public float WaveTime;
     public TextMeshProUGUI timeText;
-    
+    public ScoreKeeper scoreKeeper;
+
     //time shit
     private float timeSinceLastSpawn;
     private float spawnTime;
@@ -59,6 +60,7 @@ public class TargetManager : MonoBehaviour
             if (waveCount == 16)
             {
                 StartCoroutine(EndWave());
+                StartCoroutine(ScoreReset());
                 waveCount = 0;
             }
         }
@@ -110,6 +112,11 @@ public class TargetManager : MonoBehaviour
     {
         waveActive = false;
         timeText.text = "STOP";
+        yield return new WaitForSeconds(3f);
+    }
+    private IEnumerator ScoreReset()
+    {
+        
         yield return new WaitForSeconds(3f);
     }
 }
