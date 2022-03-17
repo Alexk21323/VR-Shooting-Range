@@ -48,7 +48,7 @@ public class Target : MonoBehaviour
         Destroy(gameObject, 3f);
         if (FindObjectOfType<TargetManager>().isWave())
         {
-            ScoreKeeper.current.ChangeScore(points);
+            ScoreKeeper.current.ChangeScore(1);
         }
         moving = false;
     }

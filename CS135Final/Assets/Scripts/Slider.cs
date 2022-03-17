@@ -8,6 +8,9 @@ public class Slider : MonoBehaviour
     public float threshold = 0.02f;
     public Transform target;
     public UnityEvent OnReached;
+    public UnityEvent activateWave;
+    public TargetManager targetManager;
+    public bool waveActive;
     private bool wasReached = false;
 
     // Start is called before the first frame update
@@ -26,6 +29,12 @@ public class Slider : MonoBehaviour
             //Reached the target
             OnReached.Invoke();
             wasReached = true;
+            waveActive = targetManager.isWave();
+            Debug.Log(waveActive);
+            if (!waveActive)
+            {
+                activateWave.Invoke();
+            }
         }
         else if (distance >= threshold)
         {

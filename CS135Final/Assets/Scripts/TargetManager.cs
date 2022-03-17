@@ -16,12 +16,14 @@ public class TargetManager : MonoBehaviour
     private float spawnTime;
     private bool waveActive;
     private float waveStartTime;
+    private int waveCount;
     private void Awake()
     {
         timeSinceLastSpawn = 0;
         spawnTime = 0;
         waveStartTime = 0;
         waveActive = false;
+        waveCount = 0;
     }
 
     public bool isWave()
@@ -37,50 +39,42 @@ public class TargetManager : MonoBehaviour
             
             if(timeSinceLastSpawn > spawnTime)
             {
-                SpawnWave();
+                //SpawnWave();
+                int spawnIndex = Random.Range(0, (int)SpawnPoints.Length / 2) * 2; //only use even indicies
+                float pathTime = Random.Range(2f, 4f);
+                Target tar = Instantiate(TargetsPrefabs[0], SpawnPoints[spawnIndex].position, SpawnPoints[spawnIndex].rotation).GetComponent<Target>();
+                tar.SetPath(SpawnPoints[spawnIndex], SpawnPoints[spawnIndex+1]);
+                tar.SetPathTime(pathTime);
                 timeSinceLastSpawn = 0;
-                spawnTime = 5 - Random.Range(1,3) * ((Time.time - waveStartTime) / WaveTime);
+                spawnTime = 2f;
+                waveCount += 1;
+                if (waveCount % 8 == 0)
+                {
+                    spawnTime = 3;
+                }
             }
 
-            timeText.fontSize += 2f * Time.deltaTime;
+            timeText.text = "Begin";
             int time = (int) Mathf.Floor(WaveTime - (Time.time - waveStartTime));
-            timeText.text = time.ToString();
-            if(time <= 0)
+            if (waveCount == 16)
             {
                 StartCoroutine(EndWave());
+                waveCount = 0;
             }
         }
     }
     private void SpawnWave()
-    {
-        //declare lists of targets that can be chosen from
-        int[] l1 = { 0, 0, 0, 0, 0 };
-        int[] l2 = { 0, 0, 0,};
-        int[] l3 = { 0, 0, 0, 0, 0, 0 };
-        int[] l4 = { 0, 0, 0, 0, 0 };
-        int[] l5 = { 0, 0, 0, 0, 0 };
-        int[] l6 = { 0, 0, 0, 0, 0 };
-        int[] l7 = { 0, 0, 0, 0 };
-        int[] l8 = { 0, 0, 0, 0, 0, 0, 0 };
-        int[] l9 = { 0, 0, 0};
-        int[] l10 = { 0, 0, 0, 0, 0 };
-        int[] l11 = { 0 };
-        int[] l12 = { 0, 0, 0, 0, 0 };
-        List<int[]> targetSets = new List<int[]>();//declare array of those lists
-        targetSets.Add(l1); targetSets.Add(l2); targetSets.Add(l3); targetSets.Add(l4); targetSets.Add(l5); targetSets.Add(l6); targetSets.Add(l7);
-        targetSets.Add(l8); targetSets.Add(l9); targetSets.Add(l10); targetSets.Add(l1); targetSets.Add(l1); targetSets.Add(l1); targetSets.Add(l11);
-        targetSets.Add(l12);
-
-        int spawnIndex = Random.Range(0, (int)SpawnPoints.Length / 2) * 2; //only use even indicies
-        float spawnTime = Random.Range(0.5f, 1.5f);//declare random interval that the targets spawn apart from each other
-        float pathTime = Random.Range(2f, 4f);
-        int[] tarList = targetSets[Random.Range(0, targetSets.Count)];
+    {    
+        int[] tarList = { 0, 0, 0, 0, 0, 0, 0, 0, };
         for (int i = 0; i < tarList.Length; i++)
         {
-            IEnumerator spawn = SpawnTarget(tarList[i],SpawnPoints[spawnIndex], SpawnPoints[spawnIndex+1],pathTime, i);//spawn target a fixed amount of time from now
+            int spawnIndex = Random.Range(0, (int)SpawnPoints.Length / 2) * 2; //only use even indicies
+            float spawnTime = Random.Range(0.75f, 1.5f);//declare random interval that the targets spawn apart from each other
+            float pathTime = Random.Range(2f, 4f);
+            IEnumerator spawn = SpawnTarget(tarList[i], SpawnPoints[spawnIndex], SpawnPoints[spawnIndex+1],pathTime, i); //spawn target a fixed amount of time from now
             StartCoroutine(spawn);
         }
-        
+        waveCount += 1;
     }
 
     private IEnumerator SpawnTarget(int targetIndex, Transform startPos, Transform endpos, float pathTime, int i)
@@ -116,27 +110,6 @@ public class TargetManager : MonoBehaviour
     {
         waveActive = false;
         timeText.text = "STOP";
-        timeText.color = new Color(255, 0, 0);
-        timeText.fontSize = 90;
         yield return new WaitForSeconds(3f);
-        if (ScoreKeeper.current.CheckHighScore())
-        {
-            timeText.text = "NEW HIGH SCORE";
-            timeText.fontSize = 70;
-            timeText.color = new Color(80, 255, 0);
-            SceneManager.LoadScene(2);
-            yield return new WaitForSeconds(3f);
-        }
-        else
-        {
-            timeText.text = "GOOD WORK";
-            timeText.fontSize = 90;
-            yield return new WaitForSeconds(3f);
-            timeText.text = "GOODBYE";
-            timeText.fontSize = 90;
-            timeText.color = new Color(80, 255, 0);
-            yield return new WaitForSeconds(2f);
-            SceneManager.LoadScene(0);
-        }
     }
 }
