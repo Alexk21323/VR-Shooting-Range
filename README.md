@@ -1,2 +1,2 @@
 # cs135Final
-VR shooting simulator 
+VR handgun range simulator 
